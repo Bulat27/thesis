@@ -32,7 +32,7 @@ def eval_dataset(dataset_path, decode_strategy, width, softmax_temp, opts):
     results = _eval_dataset(model, dataset, decode_strategy, width, softmax_temp, opts, device)
 
     costs, tours, durations = zip(*results)
-    costs, tours, durations = np.array(costs), np.array(tours), np.array(durations)
+    costs, tours, durations = np.array(costs, dtype=object), np.array(tours, dtype=object), np.array(durations, dtype=object)
     gt_tours = dataset.tour_nodes
     gt_costs = rollout_groundtruth(model.problem, dataset, opts).cpu().numpy()
     opt_gap = ((costs/gt_costs - 1) * 100)
