@@ -25,15 +25,14 @@ class AttentionModelFixed(NamedTuple):
     logit_key: torch.Tensor
 
     def __getitem__(self, key):
-        if torch.is_tensor(key) or isinstance(key, slice):
-            return AttentionModelFixed(
-                node_embeddings=self.node_embeddings[key],
-                context_node_projected=self.context_node_projected[key],
-                glimpse_key=self.glimpse_key[:, key],  # dim 0 are the heads
-                glimpse_val=self.glimpse_val[:, key],  # dim 0 are the heads
-                logit_key=self.logit_key[key]
-            )
-        return super(AttentionModelFixed, self).__getitem__(key)
+      assert torch.is_tensor(key) or isinstance(key, slice)
+      return AttentionModelFixed(
+            node_embeddings=self.node_embeddings[key],
+            context_node_projected=self.context_node_projected[key],
+            glimpse_key=self.glimpse_key[:, key],  # dim 0 are the heads
+            glimpse_val=self.glimpse_val[:, key],  # dim 0 are the heads
+            logit_key=self.logit_key[key]
+        )
 
 
 class AttentionModel(nn.Module):
@@ -266,7 +265,7 @@ class AttentionModel(nn.Module):
 
         # Parent is row idx of ind_topk,
         # can be found by enumerating elements and dividing by number of columns
-        flat_parent = torch.arange(flat_action.size(-1), out=flat_action.new()) / ind_topk.size(-1)
+        flat_parent = (torch.arange(flat_action.size(-1), out=flat_action.new()) / ind_topk.size(-1)).to(torch.int64)
 
         # Filter infeasible
         feas_ind_2d = torch.nonzero(flat_feas)
@@ -570,9 +569,9 @@ class AttentionModel(nn.Module):
         compatibility = torch.matmul(glimpse_Q, glimpse_K.transpose(-2, -1)) / math.sqrt(glimpse_Q.size(-1))
         if self.mask_inner:
             assert self.mask_logits, "Cannot mask inner without masking logits"
-            compatibility[mask[None, :, :, None, :].expand_as(compatibility)] = -1e10
+            compatibility[mask.bool()[None, :, :, None, :].expand_as(compatibility)] = -1e10
             if self.mask_graph:
-                compatibility[graph_mask[None, :, :, None, :].expand_as(compatibility)] = -1e10
+                compatibility[graph_mask.bool()[None, :, :, None, :].expand_as(compatibility)] = -1e10
 
         # Batch matrix multiplication to compute heads (n_heads, batch_size, num_steps, val_size)
         heads = torch.matmul(F.softmax(compatibility, dim=-1), glimpse_V)
@@ -590,11 +589,11 @@ class AttentionModel(nn.Module):
         
         # From the logits compute the probabilities by masking the graph, clipping, and masking visited
         if self.mask_logits and self.mask_graph:
-            logits[graph_mask] = -1e10 
+            logits[graph_mask.bool()] = -1e10 
         if self.tanh_clipping > 0:
             logits = torch.tanh(logits) * self.tanh_clipping
         if self.mask_logits:
-            logits[mask] = -1e10
+            logits[mask.bool()] = -1e10
 
         return logits, glimpse.squeeze(-2)
 

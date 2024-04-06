@@ -115,8 +115,12 @@ class GNNLayer(nn.Module):
         Vh = gates * Vh  # B x V x V x H
         
         # Enforce graph structure through masking
-        Vh[graph.unsqueeze(-1).expand_as(Vh)] = 0
-        
+        # Vh[graph.unsqueeze(-1).expand_as(Vh)] = 0
+
+        # mine
+        graph_mask = graph.unsqueeze(-1).expand_as(Vh).bool()  # Convert to boolean mask
+        Vh[graph_mask] = 0
+
         if self.aggregation == "mean":
             return torch.sum(Vh, dim=2) / torch.sum(1-graph, dim=2).unsqueeze(-1).type_as(Vh)
         
