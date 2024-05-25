@@ -118,7 +118,7 @@ class StateTSP(NamedTuple):
         if self.i.item() == 0:
             return torch.zeros(batch_size, 1, n_loc, dtype=torch.uint8, device=self.loc.device)
         else:
-            return self.graph.gather(1, self.prev_a.unsqueeze(-1).expand(-1, -1, n_loc))
+            return self.graph.gather(1, (self.prev_a.unsqueeze(-1).expand(-1, -1, n_loc)).long())
             
     def get_graph(self):
         return self.graph
