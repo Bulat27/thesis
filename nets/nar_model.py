@@ -182,10 +182,10 @@ class NARModel(nn.Module):
             _log_p[_log_p == 0] = -1e-10  # Set 0s (i.e. log(1)s) to very small negative number
             
             beamsearch = Beamsearch(beam_size, batch_size, num_nodes, device=_log_p.device, decode_type=self.decode_type)
-            trans_probs = _log_p.gather(1, (beamsearch.get_current_state()).long())
+            trans_probs = _log_p.gather(1, beamsearch.get_current_state())
             for step in range(num_nodes - 1):
                 beamsearch.advance(trans_probs)
-                trans_probs = _log_p.gather(1, (beamsearch.get_current_state()).long())
+                trans_probs = _log_p.gather(1, beamsearch.get_current_state())
 
             # Find TSP tour with highest probability among beam_size candidates
             ends = torch.zeros(batch_size, 1, device=_log_p.device)
