@@ -8,11 +8,11 @@ DEVICES="0"
 NUM_WORKERS=0
 
 MIN_SIZE=20
-MAX_SIZE=50
+MAX_SIZE=20
 NEIGHBORS=0.2
 KNN_STRAT="percentage"
 
-TRAIN_DATASET="data/tsp/tsp20-50_train_concorde.txt"
+TRAIN_DATASET="data/tsp/tsp20_train_concorde.txt"
 VAL_DATASET1="data/tsp/tsp20_test_concorde.txt"
 VAL_DATASET2="data/tsp/tsp50_test_concorde.txt"
 # VAL_DATASET3="data/tsp/tsp100_test_concorde.txt"
@@ -35,7 +35,7 @@ N_ENCODE_LAYERS=4
 
 LR_MODEL=0.0001
 MAX_NORM=1
-CHECKPOINT_EPOCHS=0
+CHECKPOINT_EPOCHS=1
 
 CUDA_VISIBLE_DEVICES="$DEVICES" python run.py --problem "$PROBLEM" \
     --model "$MODEL" \
@@ -54,4 +54,5 @@ CUDA_VISIBLE_DEVICES="$DEVICES" python run.py --problem "$PROBLEM" \
     --lr_model "$LR_MODEL" --max_grad_norm "$MAX_NORM" \
     --num_workers "$NUM_WORKERS" \
     --checkpoint_epochs "$CHECKPOINT_EPOCHS" \
+    --normalization "batch" --learn_norm \
     --run_name "$RUN_NAME"
