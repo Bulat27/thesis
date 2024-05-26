@@ -74,7 +74,7 @@ class Beamsearch(object):
         # Update scores
         self.scores = bestScores
         # Update backpointers
-        prev_k = bestScoresId / self.num_nodes
+        prev_k = bestScoresId // self.num_nodes
         self.prev_Ks.append(prev_k)
         # Update outputs
         new_nodes = bestScoresId - prev_k * self.num_nodes
@@ -117,6 +117,6 @@ class Beamsearch(object):
         k = k.type(torch.long).to(self.device)
         hyp = -1 * torch.ones(self.batch_size, self.num_nodes, dtype=torch.long).to(self.device)
         for j in range(len(self.prev_Ks) - 1, -2, -1):
-            hyp[:, j + 1] = self.next_nodes[j + 1].gather(1, k.long()).view(1, self.batch_size)
-            k = self.prev_Ks[j].gather(1, k.long())
+            hyp[:, j + 1] = self.next_nodes[j + 1].gather(1, k).view(1, self.batch_size)
+            k = self.prev_Ks[j].gather(1, k)
         return hyp
