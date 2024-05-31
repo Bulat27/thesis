@@ -9,8 +9,7 @@ NUM_WORKERS=0
 
 MIN_SIZE=20
 MAX_SIZE=20
-NEIGHBORS=0.2
-KNN_STRAT="percentage"
+NEIGHBORS=-1.0
 
 TRAIN_DATASET="data/tsp/tsp20_train_concorde.txt"
 VAL_DATASET1="data/tsp/tsp20_test_concorde.txt"
@@ -54,5 +53,4 @@ CUDA_VISIBLE_DEVICES="$DEVICES" python run.py --problem "$PROBLEM" \
     --lr_model "$LR_MODEL" --max_grad_norm "$MAX_NORM" \
     --num_workers "$NUM_WORKERS" \
     --checkpoint_epochs "$CHECKPOINT_EPOCHS" \
-    --normalization "batch" --learn_norm \
     --run_name "$RUN_NAME"
