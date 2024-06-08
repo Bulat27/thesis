@@ -41,7 +41,7 @@ CUDA_VISIBLE_DEVICES="$DEVICES" python run.py --problem "$PROBLEM" \
     --min_size "$MIN_SIZE" --max_size "$MAX_SIZE" \
     --neighbors "$NEIGHBORS" --knn_strat "$KNN_STRAT" \
     --train_dataset "$TRAIN_DATASET" \
-    --val_datasets "$VAL_DATASET1" "$VAL_DATASET2" \
+    --val_datasets "$VAL_DATASET1" \
     --epoch_size "$EPOCH_SIZE" \
     --batch_size "$BATCH_SIZE" --accumulation_steps "$ACCUMULATION_STEPS" \
     --n_epochs "$N_EPOCHS" \
