@@ -13,7 +13,7 @@ NEIGHBORS=-1.0
 
 TRAIN_DATASET="data/tsp/data/tsp/tsp50_train_concorde.txt"
 # VAL_DATASET1="data/tsp/tsp20_test_concorde.txt"
-VAL_DATASET2="data/tsp/data/tsp/tsp50_test_concorde.txt"
+VAL_DATASET1="data/tsp/data/tsp/tsp50_test_concorde.txt"
 # VAL_DATASET3="data/tsp/tsp100_test_concorde.txt"
 
 N_EPOCHS=10
