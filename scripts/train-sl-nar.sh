@@ -1,18 +1,18 @@
 #!/usr/bin/env bash
 
-RUN_NAME="sl-nar-var-20pnn-gnn-max"
+RUN_NAME="sl-nar-50pnn-gnn-max"
 
 PROBLEM="tspsl"
 
 DEVICES="0"
 NUM_WORKERS=0
 
-MIN_SIZE=20
-MAX_SIZE=20
+MIN_SIZE=50
+MAX_SIZE=50
 NEIGHBORS=-1.0
 
-TRAIN_DATASET="data/tsp/tsp20_train_concorde.txt"
-VAL_DATASET1="data/tsp/tsp20_test_concorde.txt"
+TRAIN_DATASET="data/tsp/tsp50_train_concorde.txt"
+# VAL_DATASET1="data/tsp/tsp20_test_concorde.txt"
 VAL_DATASET2="data/tsp/tsp50_test_concorde.txt"
 # VAL_DATASET3="data/tsp/tsp100_test_concorde.txt"
 
