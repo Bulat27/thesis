@@ -53,5 +53,5 @@ CUDA_VISIBLE_DEVICES="$DEVICES" python run.py --problem "$PROBLEM" \
     --lr_model "$LR_MODEL" --max_grad_norm "$MAX_NORM" \
     --num_workers "$NUM_WORKERS" \
     --checkpoint_epochs "$CHECKPOINT_EPOCHS" \
-    --resume "./resume_training/epoch-5.pt" \
+    --resume "./resume_training/epoch-8.pt" \
     --run_name "$RUN_NAME"
