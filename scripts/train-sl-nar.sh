@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-RUN_NAME="sl-nar-var-50pnn-gnn-max"
+RUN_NAME="sl-nar-var-50pnn-gnn-max-scaled"
 
 PROBLEM="tspsl"
 
@@ -17,7 +17,7 @@ VAL_DATASET1="data/tsp/data/tsp/tsp20_test_concorde.txt"
 VAL_DATASET2="data/tsp/data/tsp/tsp50_test_concorde.txt"
 # VAL_DATASET3="data/tsp/tsp100_test_concorde.txt"
 
-N_EPOCHS=10
+N_EPOCHS=20
 EPOCH_SIZE=1280000
 BATCH_SIZE=128
 ACCUMULATION_STEPS=1
@@ -31,7 +31,7 @@ AGGREGATION="max"
 AGGREGATION_GRAPH="mean"
 NORMALIZATION="batch"
 EMBEDDING_DIM=128
-N_ENCODE_LAYERS=4
+N_ENCODE_LAYERS=10
 
 LR_MODEL=0.0001
 MAX_NORM=1
@@ -54,5 +54,4 @@ CUDA_VISIBLE_DEVICES="$DEVICES" python run.py --problem "$PROBLEM" \
     --lr_model "$LR_MODEL" --max_grad_norm "$MAX_NORM" \
     --num_workers "$NUM_WORKERS" \
     --checkpoint_epochs "$CHECKPOINT_EPOCHS" \
-    --resume "./resume_training/epoch-4.pt" \
     --run_name "$RUN_NAME"
