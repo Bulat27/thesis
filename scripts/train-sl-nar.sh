@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-RUN_NAME="sl-nar-var-50pnn-gnn-max-scaled"
+RUN_NAME="sl-nar-var-50pnn-gnn-max-scaled-L2all"
 
 PROBLEM="tspsl"
 
@@ -54,5 +54,4 @@ CUDA_VISIBLE_DEVICES="$DEVICES" python run.py --problem "$PROBLEM" \
     --lr_model "$LR_MODEL" --max_grad_norm "$MAX_NORM" \
     --num_workers "$NUM_WORKERS" \
     --checkpoint_epochs "$CHECKPOINT_EPOCHS" \
-    --resume "./resume_training/epoch-17.pt" \
     --run_name "$RUN_NAME"
