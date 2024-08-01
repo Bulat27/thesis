@@ -112,12 +112,12 @@ class NARModel(nn.Module):
                 loss = nn.CrossEntropyLoss(weight=class_weights, reduction='mean')(
                     logits.permute(0, 3, 1, 2), targets)
                 
-                  # Temporary change, still under testing.
+                # Temporary change, still under testing.
                 
-                num_nodes = nodes.shape[1]
-                scaling_factor = 0.01 * num_nodes + 0.5
-                # print(f"Scaling factor:{scaling_factor}")
-                loss = loss * scaling_factor
+                # num_nodes = nodes.shape[1]
+                # scaling_factor = 0.01 * num_nodes + 0.5
+                # # print(f"Scaling factor:{scaling_factor}")
+                # loss = loss * scaling_factor
 
                 return torch.zeros(nodes.shape[0]), loss
 

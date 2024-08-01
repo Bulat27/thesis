@@ -52,6 +52,9 @@ class GNNLayer(nn.Module):
             "layer": nn.LayerNorm(hidden_dim, elementwise_affine=learn_norm),
             "batch": nn.BatchNorm1d(hidden_dim, affine=learn_norm, track_running_stats=track_norm)
         }.get(self.norm, None)
+
+        # Dropout layer for node features
+        self.dropout_h = nn.Dropout(p=0.5)
         
     def forward(self, h, e, graph):
         """
@@ -78,6 +81,8 @@ class GNNLayer(nn.Module):
         # Update edge features and compute edge gates
         e = Ah.unsqueeze(1) + Bh.unsqueeze(2) + Ce  # B x V x V x H
         gates = torch.sigmoid(e)  # B x V x V x H
+
+        h = self.dropout_h(h)
 
         # Update node features
         h = Uh + self.aggregate(Vh, graph, gates)  # B x V x H
