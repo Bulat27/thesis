@@ -20,7 +20,7 @@ VAL_DATASET2="data/tsp/data/tsp/tsp50_test_concorde.txt"
 N_EPOCHS=20
 EPOCH_SIZE=1280000
 BATCH_SIZE=128
-ACCUMULATION_STEPS=1
+ACCUMULATION_STEPS=10
 
 VAL_SIZE=1280
 ROLLOUT_SIZE=1280
@@ -54,5 +54,4 @@ CUDA_VISIBLE_DEVICES="$DEVICES" python run.py --problem "$PROBLEM" \
     --lr_model "$LR_MODEL" --max_grad_norm "$MAX_NORM" \
     --num_workers "$NUM_WORKERS" \
     --checkpoint_epochs "$CHECKPOINT_EPOCHS" \
-    --resume "./resume_training/epoch-12.pt" \
     --run_name "$RUN_NAME"
