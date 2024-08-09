@@ -247,7 +247,7 @@ def train_epoch_sl(model, optimizer, lr_scheduler, epoch, train_dataset, val_dat
     
 
 def train_batch_sl(model, optimizer, epoch, batch_id, 
-                   step, batch, tb_logger, opts):
+                   step, batch, tb_logger, opts, accumulated_loss=0.0):
     # Optionally move Tensors to GPU
     x = move_to(batch['nodes'], opts.device)
     graph = move_to(batch['graph'], opts.device)
@@ -267,19 +267,28 @@ def train_batch_sl(model, optimizer, epoch, batch_id,
     
     # Normalize loss for gradient accumulation
     loss = loss / opts.accumulation_steps
+
+    accumulated_loss += loss.item()
     
     # Perform backward pass
     loss.backward()
     
     # Clip gradient norms and get (clipped) gradient norms for logging
     grad_norms = clip_grad_norms(optimizer.param_groups, opts.max_grad_norm)
+
+    # # Logging
+    # if step % int(opts.log_step) == 0:
+    #     log_values_sl(cost, grad_norms, epoch, batch_id, 
+    #                   step, accumulated_loss, tb_logger, opts)
     
     # Perform optimization step after accumulating gradients
     if step % opts.accumulation_steps == 0:
         optimizer.step()
         optimizer.zero_grad()
 
-    # Logging
-    if step % int(opts.log_step) == 0:
         log_values_sl(cost, grad_norms, epoch, batch_id, 
-                      step, loss, tb_logger, opts)
+                      step, accumulated_loss, tb_logger, opts)
+
+        accumulated_loss = 0.0
+
+
