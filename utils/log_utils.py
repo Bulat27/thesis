@@ -38,7 +38,7 @@ def log_values_sl(cost, grad_norms, epoch, batch_id,
     if not opts.no_tensorboard:
         tb_logger.log_value('avg_cost', avg_cost, step)
         
-        tb_logger.log_value('actor_loss', loss, step)
+        tb_logger.log_value('actor_loss', loss.item() * opts.accumulation_steps, step)
 
         tb_logger.log_value('grad_norm', grad_norms[0], step)
         tb_logger.log_value('grad_norm_clipped', grad_norms_clipped[0], step)
