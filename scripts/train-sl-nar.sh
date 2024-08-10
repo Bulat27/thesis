@@ -1,26 +1,26 @@
 #!/usr/bin/env bash
 
-RUN_NAME="sl-nar-var-50pnn-gnn-max-scaled-L2all"
+RUN_NAME="128k_tsp50_scaled_tanh_wo_ss"
 
 PROBLEM="tspsl"
 
 DEVICES="0"
 NUM_WORKERS=0
 
-MIN_SIZE=20
+MIN_SIZE=50
 MAX_SIZE=50
 NEIGHBORS=0.5
 KNN_STRAT="percentage"
 
-TRAIN_DATASET="data/tsp/data/tsp/tsp20-50_train_concorde.txt"
+TRAIN_DATASET="data/tsp/data/tsp/tsp50_train_concorde.txt"
 VAL_DATASET1="data/tsp/data/tsp/tsp20_test_concorde.txt"
 VAL_DATASET2="data/tsp/data/tsp/tsp50_test_concorde.txt"
 # VAL_DATASET3="data/tsp/tsp100_test_concorde.txt"
 
 N_EPOCHS=20
-EPOCH_SIZE=1280000
-BATCH_SIZE=128
-ACCUMULATION_STEPS=10
+EPOCH_SIZE=128000
+BATCH_SIZE=64
+ACCUMULATION_STEPS=2
 
 VAL_SIZE=1280
 ROLLOUT_SIZE=1280
@@ -54,5 +54,4 @@ CUDA_VISIBLE_DEVICES="$DEVICES" python run.py --problem "$PROBLEM" \
     --lr_model "$LR_MODEL" --max_grad_norm "$MAX_NORM" \
     --num_workers "$NUM_WORKERS" \
     --checkpoint_epochs "$CHECKPOINT_EPOCHS" \
-     --resume "./resume_training/epoch-18.pt" \
     --run_name "$RUN_NAME"
