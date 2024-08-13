@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-RUN_NAME="L1"
+RUN_NAME="1.28M_2050_wo_ss_L2_before_e_no_other_norm_scaled"
 
 PROBLEM="tspsl"
 
@@ -29,7 +29,7 @@ MODEL="nar"
 ENCODER="gnn"
 AGGREGATION="max"
 AGGREGATION_GRAPH="mean"
-NORMALIZATION="batch"
+NORMALIZATION="None"
 EMBEDDING_DIM=128
 N_ENCODE_LAYERS=10
 
@@ -49,10 +49,9 @@ CUDA_VISIBLE_DEVICES="$DEVICES" python run.py --problem "$PROBLEM" \
     --val_size "$VAL_SIZE" --rollout_size "$ROLLOUT_SIZE" \
     --encoder "$ENCODER" --aggregation "$AGGREGATION" \
     --n_encode_layers "$N_ENCODE_LAYERS" --gated \
-    --normalization "$NORMALIZATION" --learn_norm \
+    --normalization "$NORMALIZATION" \
     --embedding_dim "$EMBEDDING_DIM" --hidden_dim "$EMBEDDING_DIM" \
     --lr_model "$LR_MODEL" --max_grad_norm "$MAX_NORM" \
     --num_workers "$NUM_WORKERS" \
     --checkpoint_epochs "$CHECKPOINT_EPOCHS" \
-    --resume "./resume_training/epoch-9.pt" \
     --run_name "$RUN_NAME"

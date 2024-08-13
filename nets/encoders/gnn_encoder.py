@@ -91,6 +91,8 @@ class GNNLayer(nn.Module):
         h = self.norm_h(
             h.view(batch_size*num_nodes, hidden_dim)
         ).view(batch_size, num_nodes, hidden_dim) if self.norm_h else h
+
+        h = F.normalize(h, p=2, dim=-1)
         
         # Normalize edge features
         e = self.norm_e(
@@ -164,6 +166,6 @@ class GNNEncoder(nn.Module):
 
         for layer in self.layers:
             x, e = layer(x, e, graph)
-            x = F.normalize(x, p=1, dim=2)
+            # x = F.normalize(x, p=1, dim=2)
 
         return x
