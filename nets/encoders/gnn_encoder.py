@@ -92,7 +92,7 @@ class GNNLayer(nn.Module):
             h.view(batch_size*num_nodes, hidden_dim)
         ).view(batch_size, num_nodes, hidden_dim) if self.norm_h else h
 
-        h = F.normalize(h, p=2, dim=-1)
+        # h = F.normalize(h, p=2, dim=-1)
         
         # Normalize edge features
         e = self.norm_e(

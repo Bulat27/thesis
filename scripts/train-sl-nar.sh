@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-RUN_NAME="128k_tsp50_wo_ss_L2_before_e_no_other_norm_scaled"
+RUN_NAME="1.28M_2050_original_scaled_wo_ss"
 
 PROBLEM="tspsl"
 
@@ -12,15 +12,15 @@ MAX_SIZE=50
 NEIGHBORS=0.5
 KNN_STRAT="percentage"
 
-TRAIN_DATASET="data/tsp/data/tsp/tsp50_train_concorde.txt"
+TRAIN_DATASET="data/tsp/data/tsp/tsp20-50_train_concorde.txt"
 VAL_DATASET1="data/tsp/data/tsp/tsp20_test_concorde.txt"
 VAL_DATASET2="data/tsp/data/tsp/tsp50_test_concorde.txt"
 # VAL_DATASET3="data/tsp/tsp100_test_concorde.txt"
 
 N_EPOCHS=20
-EPOCH_SIZE=128000
-BATCH_SIZE=64
-ACCUMULATION_STEPS=2
+EPOCH_SIZE=1280000
+BATCH_SIZE=128
+ACCUMULATION_STEPS=1
 
 VAL_SIZE=1280
 ROLLOUT_SIZE=1280
@@ -29,7 +29,7 @@ MODEL="nar"
 ENCODER="gnn"
 AGGREGATION="max"
 AGGREGATION_GRAPH="mean"
-NORMALIZATION="None"
+NORMALIZATION="batch"
 EMBEDDING_DIM=128
 N_ENCODE_LAYERS=10
 
@@ -49,7 +49,7 @@ CUDA_VISIBLE_DEVICES="$DEVICES" python run.py --problem "$PROBLEM" \
     --val_size "$VAL_SIZE" --rollout_size "$ROLLOUT_SIZE" \
     --encoder "$ENCODER" --aggregation "$AGGREGATION" \
     --n_encode_layers "$N_ENCODE_LAYERS" --gated \
-    --normalization "$NORMALIZATION" \
+    --normalization "$NORMALIZATION" --learn_norm\
     --embedding_dim "$EMBEDDING_DIM" --hidden_dim "$EMBEDDING_DIM" \
     --lr_model "$LR_MODEL" --max_grad_norm "$MAX_NORM" \
     --num_workers "$NUM_WORKERS" \
