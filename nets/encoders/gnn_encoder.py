@@ -100,7 +100,7 @@ class GNNLayer(nn.Module):
         ).view(batch_size, num_nodes, num_nodes, hidden_dim) if self.norm_e else e
 
         # Apply non-linearity
-        h = F.relu(h)
+        h = F.tanh(h)
         e = F.relu(e)
 
         # Make residual connection
