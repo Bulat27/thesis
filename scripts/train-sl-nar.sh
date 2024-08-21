@@ -31,7 +31,7 @@ AGGREGATION="max"
 AGGREGATION_GRAPH="mean"
 NORMALIZATION="batch"
 EMBEDDING_DIM=96
-N_ENCODE_LAYERS=18
+N_ENCODE_LAYERS=27
 
 LR_MODEL=0.0001
 MAX_NORM=1
@@ -54,5 +54,4 @@ CUDA_VISIBLE_DEVICES="$DEVICES" python run.py --problem "$PROBLEM" \
     --lr_model "$LR_MODEL" --max_grad_norm "$MAX_NORM" \
     --num_workers "$NUM_WORKERS" \
     --checkpoint_epochs "$CHECKPOINT_EPOCHS" \
-    --resume "./resume_training/epoch-9.pt" \
     --run_name "$RUN_NAME"
