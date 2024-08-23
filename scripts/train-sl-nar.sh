@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-RUN_NAME="1.28M_2050_non_scaled_tanh"
+RUN_NAME="1.28M_2050_non_scaled_tanh_deep"
 
 PROBLEM="tspsl"
 
@@ -30,8 +30,8 @@ ENCODER="gnn"
 AGGREGATION="max"
 AGGREGATION_GRAPH="mean"
 NORMALIZATION="batch"
-EMBEDDING_DIM=128
-N_ENCODE_LAYERS=4
+EMBEDDING_DIM=96
+N_ENCODE_LAYERS=7
 
 LR_MODEL=0.0001
 MAX_NORM=1
@@ -54,5 +54,4 @@ CUDA_VISIBLE_DEVICES="$DEVICES" python run.py --problem "$PROBLEM" \
     --lr_model "$LR_MODEL" --max_grad_norm "$MAX_NORM" \
     --num_workers "$NUM_WORKERS" \
     --checkpoint_epochs "$CHECKPOINT_EPOCHS" \
-    --resume "./resume_training/epoch-8.pt" \
     --run_name "$RUN_NAME"
