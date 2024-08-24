@@ -1,26 +1,26 @@
 #!/usr/bin/env bash
 
-RUN_NAME="1.28M_2050_non_scaled_tanh_deep"
+RUN_NAME="128k_tsp50_L2_all_wo_ss_scaled"
 
 PROBLEM="tspsl"
 
 DEVICES="0"
 NUM_WORKERS=0
 
-MIN_SIZE=20
+MIN_SIZE=50
 MAX_SIZE=50
 NEIGHBORS=0.5
 KNN_STRAT="percentage"
 
-TRAIN_DATASET="data/tsp/data/tsp/tsp20-50_train_concorde.txt"
+TRAIN_DATASET="data/tsp/data/tsp/tsp50_train_concorde.txt"
 VAL_DATASET1="data/tsp/data/tsp/tsp20_test_concorde.txt"
 VAL_DATASET2="data/tsp/data/tsp/tsp50_test_concorde.txt"
 # VAL_DATASET3="data/tsp/tsp100_test_concorde.txt"
 
-N_EPOCHS=10
-EPOCH_SIZE=1280000
-BATCH_SIZE=128
-ACCUMULATION_STEPS=1
+N_EPOCHS=20
+EPOCH_SIZE=128000
+BATCH_SIZE=64
+ACCUMULATION_STEPS=2
 
 VAL_SIZE=1280
 ROLLOUT_SIZE=1280
@@ -30,8 +30,8 @@ ENCODER="gnn"
 AGGREGATION="max"
 AGGREGATION_GRAPH="mean"
 NORMALIZATION="batch"
-EMBEDDING_DIM=96
-N_ENCODE_LAYERS=7
+EMBEDDING_DIM=128
+N_ENCODE_LAYERS=10
 
 LR_MODEL=0.0001
 MAX_NORM=1
