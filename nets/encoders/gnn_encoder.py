@@ -100,7 +100,7 @@ class GNNLayer(nn.Module):
         ).view(batch_size, num_nodes, num_nodes, hidden_dim) if self.norm_e else e
 
         # Apply non-linearity
-        h = F.relu(h)
+        h = F.tanh(h)
         e = F.relu(e)
 
         # Make residual connection
@@ -166,6 +166,6 @@ class GNNEncoder(nn.Module):
 
         for layer in self.layers:
             x, e = layer(x, e, graph)
-            x = F.normalize(x, p=2, dim=2)
+            # x = F.normalize(x, p=2, dim=2)
 
         return x
